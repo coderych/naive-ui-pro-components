@@ -33,5 +33,5 @@ const data = ref([
 </script>
 
 <template>
-  <ProTable :columns="columns" :data="data" :pagination="{ pageSize: 10 }" :option="{ header: false }" />
+  <ProTable title="高级表格" :columns="columns" :data="data" :pagination="{ pageSize: 10 }" :option="{ header: false }" />
 </template>

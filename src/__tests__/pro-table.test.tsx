@@ -90,6 +90,30 @@ describe('proTable', () => {
     expect(header).toHaveBeenLastCalledWith({ keys: [1], rows: [data[0]] })
   })
 
+  it('renders the title prop and lets the title slot override it', () => {
+    const wrapper = mount(ProTable, {
+      props: {
+        columns: [{ key: 'name', title: '姓名' }],
+        title: '用户列表',
+      },
+    })
+
+    expect(wrapper.find('.npro-table-header__title-content').text()).toBe('用户列表')
+
+    const slotWrapper = mount(ProTable, {
+      props: {
+        columns: [{ key: 'name', title: '姓名' }],
+        title: '用户列表',
+      },
+      slots: {
+        title: () => '自定义标题',
+      },
+    })
+
+    expect(slotWrapper.find('.npro-table-header__title').text()).toBe('自定义标题')
+    expect(slotWrapper.find('.npro-table-header__title-content').exists()).toBe(false)
+  })
+
   it('does not add a duplicate selection column', () => {
     const wrapper = mount(ProTable, {
       props: {

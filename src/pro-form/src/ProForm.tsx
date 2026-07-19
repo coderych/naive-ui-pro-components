@@ -62,8 +62,9 @@ export default defineComponent({
     }
 
     function updateFieldValue(column: any, path: string, value: unknown): void {
-      const newModel = { ...model.value }
-      set(newModel, path, value)
+      const currentModel = model.value
+      set(currentModel, path, value)
+      const newModel = { ...currentModel }
       model.value = newModel
       column.onUpdate?.(value, newModel)
     }

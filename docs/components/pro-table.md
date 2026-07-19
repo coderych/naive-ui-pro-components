@@ -116,6 +116,7 @@
 |------|------|--------|------|
 | columns | `ProTableColumn[]` | `[]` | 列配置 |
 | data | `ProTableRecord[]` | `[]` | 静态数据 |
+| title | `string` | - | 工具栏标题；`title` 插槽优先级更高 |
 | request | `(params) => Promise<{data, total}>` | - | 远程请求函数 |
 | defaultParams | `Record<string, unknown>` | `{}` | 默认查询参数 |
 | manual | `boolean` | `false` | 手动触发首次请求 |

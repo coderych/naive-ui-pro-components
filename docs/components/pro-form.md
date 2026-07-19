@@ -26,7 +26,7 @@
 
 ## 表单验证
 
-<DemoBlock title="表单验证" description="通过 rule 配置验证规则，支持正则、自定义校验器。">
+<DemoBlock title="表单验证" description="通过 rule 配置验证规则，支持正则、自定义校验器和下拉框 change 校验。">
   <template #default><ProFormValidation /></template>
   <template #code>
 

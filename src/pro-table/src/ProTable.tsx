@@ -289,8 +289,10 @@ export default defineComponent({
                       extra: slots['header-extra']
                         ? () => slots['header-extra']!(selectionSlotProps)
                         : undefined,
-                      title: slots.title
-                        ? () => slots.title!(selectionSlotProps)
+                      title: slots.title || props.title
+                        ? () => slots.title?.(selectionSlotProps) ?? (
+                            <span class="npro-table-header__title-content">{props.title}</span>
+                          )
                         : undefined,
                     }}
                   </TableHeader>

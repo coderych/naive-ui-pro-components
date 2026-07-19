@@ -143,6 +143,7 @@ async function request(params) {
 | --- | --- | --- | --- |
 | columns | 表格列配置 | `ProTableColumn[]` | `[]` |
 | data | 表格数据（静态数据模式） | `any[]` | `[]` |
+| title | 工具栏标题；同名插槽优先级更高 | `string` | - |
 | request | 远程请求函数 | `(params) => Promise<{data, total}>` | - |
 | rowKey | 行数据唯一标识字段 | `string` | `'id'` |
 | loading | 加载状态 | `boolean` | `false` |

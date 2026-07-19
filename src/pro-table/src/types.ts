@@ -45,7 +45,6 @@ export interface ProTableSearchOptionBase {
   key?: string
   label?: string
   onUpdate?: (value: unknown, params: Record<string, unknown>) => boolean | void
-  props?: Record<string, unknown>
   render?: (props: Record<string, unknown>, params: Record<string, unknown>) => VNodeChild
   slots?: Record<string, (...args: unknown[]) => VNodeChild>
   sort?: number
@@ -211,6 +210,10 @@ export const proTableProps = {
   searchDebounce: {
     type: Number,
     default: 300,
+  },
+  title: {
+    type: String,
+    default: undefined,
   },
   showIndex: {
     type: Boolean,

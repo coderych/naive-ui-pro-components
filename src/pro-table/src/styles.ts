@@ -71,7 +71,29 @@ const proTableStyle = c('.npro-table', {
     display: 'flex',
     alignItems: 'center',
   }),
-  c('.npro-table-header__title', { minWidth: 0 }),
+  c('.npro-table-header__title', { minWidth: 0 }, [
+    c('.npro-table-header__title-content', {
+      display: 'inline-flex',
+      alignItems: 'center',
+      gap: '10px',
+      minWidth: 0,
+      color: 'var(--text-color-1, #1f2225)',
+      fontSize: '18px',
+      fontWeight: 600,
+      letterSpacing: '0.01em',
+      lineHeight: 1.4,
+    }, [
+      c('&::before', {
+        content: '\"\"',
+        flexShrink: 0,
+        width: '4px',
+        height: '20px',
+        background: 'linear-gradient(180deg, var(--primary-color-hover, #36ad6a), var(--primary-color, #18a058))',
+        borderRadius: '999px',
+        boxShadow: '0 0 0 3px color-mix(in srgb, var(--primary-color, #18a058) 10%, transparent)',
+      }),
+    ]),
+  ]),
   c('.npro-table-header__actions', {
     flexShrink: 0,
     gap: '8px',
