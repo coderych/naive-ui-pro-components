@@ -27,6 +27,7 @@ export default defineConfig({
     nav: [
       { text: '指南', link: '/guide/getting-started' },
       { text: '组件', link: '/components/pro-table' },
+      { text: '变更日志', link: '/guide/changelog' },
       {
         text: '相关链接',
         items: [
@@ -43,6 +44,7 @@ export default defineConfig({
           items: [
             { text: '快速开始', link: '/guide/getting-started' },
             { text: '国际化', link: '/guide/i18n' },
+            { text: '变更日志', link: '/guide/changelog' },
           ],
         },
       ],

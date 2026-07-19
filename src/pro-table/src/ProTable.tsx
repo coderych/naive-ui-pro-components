@@ -1,9 +1,9 @@
 import type { DataTableInst, DataTableProps } from 'naive-ui'
 import type { ComponentPublicInstance, Slot } from 'vue'
 import type { ProTableBatchAction, ProTableInst, ProTableOption, ProTableRecord, ProTableSorter } from './types'
-import { dataTableProps, NButton, NCard, NDataTable, NIcon, NScrollbar, NSpace, NText } from 'naive-ui'
+import { dataTableProps, NButton, NCard, NDataTable, NEl, NIcon, NScrollbar, NSpace, NText } from 'naive-ui'
 import { computed, defineComponent, nextTick, onBeforeUnmount, ref, shallowRef, watch } from 'vue'
-import { invokeHandlers, pickProps, runSafely } from '../../shared'
+import { invokeHandlers, pickProps, runSafely, useExposeProxy } from '../../shared'
 import { useProTableColumns } from './columns-state'
 import QueryForm from './components/QueryForm'
 import TableHeader from './components/TableHeader'
@@ -201,16 +201,7 @@ export default defineComponent({
       setParams,
       updateParams,
     }
-    const exposedTable = new Proxy(tableApi, {
-      get(target, key, receiver) {
-        if (Reflect.has(target, key))
-          return Reflect.get(target, key, receiver)
-        const table = tableRef.value as unknown as Record<PropertyKey, unknown> | null
-        const value = table?.[key]
-        return typeof value === 'function' ? value.bind(table) : value
-      },
-    })
-    expose(exposedTable as ProTableInst)
+    expose(useExposeProxy(tableRef, tableApi) as ProTableInst)
 
     return () => {
       const showSearch = option.value !== false && option.value.search !== false
@@ -333,11 +324,11 @@ export default defineComponent({
       )
 
       return (
-        <div class={['npro-table', { 'npro-table--full': full.value }]}>
+        <NEl class={['npro-table', { 'npro-table--full': full.value }]}>
           {full.value
             ? <NScrollbar class="npro-table__fullscreen-scrollbar">{content}</NScrollbar>
             : content}
-        </div>
+        </NEl>
       )
     }
   },

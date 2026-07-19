@@ -2,7 +2,7 @@ import type { DataTableProps } from 'naive-ui'
 import type { ProTableColumnFixed, ProTableColumnKey, ProTableColumnOption } from '../columns-state'
 import type { ProTableOption } from '../types'
 import { Icon } from '@iconify/vue'
-import { NButton, NCheckbox, NDropdown, NPopover, NTooltip } from 'naive-ui'
+import { NButton, NCheckbox, NDropdown, NEl, NPopover, NTooltip } from 'naive-ui'
 import { computed, defineComponent, ref, watch } from 'vue'
 import { VueDraggable } from 'vue-draggable-plus'
 import { useProLocale } from '../../../config-provider'
@@ -101,7 +101,7 @@ export default defineComponent({
           )}
 
           {isEnabled('size') && (
-            <NDropdown trigger="click" options={sizeOptions.value} value={props.size} onSelect={updateSize}>
+            <NDropdown trigger="click" options={sizeOptions.value} showArrow={true} value={props.size} onSelect={updateSize}>
               {{ default: () => (
                 <NButton class="npro-table-header__action" secondary aria-label={locale('density')}>
                   {{ icon: () => icon('heroicons-list-bullet', 20) }}
@@ -117,7 +117,7 @@ export default defineComponent({
                   {{ icon: () => icon('heroicons-cog-6-tooth', 20) }}
                 </NButton>
               ), default: () => (
-                <div class="npro-table-header__setting">
+                <NEl class="npro-table-header__setting">
                   <div class="npro-table-header__setting-header">
                     <NCheckbox checked={isAllChecked.value} indeterminate={isIndeterminate.value} onUpdate:checked={updateAllColumns}>
                       {{ default: () => locale('selectAll') }}
@@ -153,7 +153,7 @@ export default defineComponent({
                       </div>
                     ))}
                   </VueDraggable>
-                </div>
+                </NEl>
               ) }}
             </NPopover>
           )}

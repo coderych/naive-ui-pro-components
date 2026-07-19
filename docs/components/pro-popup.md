@@ -8,23 +8,7 @@
   <template #default><ProPopupBasic /></template>
   <template #code>
 
-```vue
-<script setup lang="ts">
-import { ProPopup } from 'naive-ui-pro-components'
-import { ref } from 'vue'
-
-const show = ref(false)
-</script>
-
-<template>
-  <n-button type="primary" @click="show = true">
-    打开弹窗
-  </n-button>
-  <ProPopup v-model:show="show" title="编辑资料" preset="drawer" :width="600">
-    弹窗内容
-  </ProPopup>
-</template>
-```
+<<< @/.vitepress/theme/demos/ProPopupBasic.vue
 
   </template>
 </DemoBlock>
@@ -35,11 +19,7 @@ const show = ref(false)
   <template #default><ProPopupNoChrome /></template>
   <template #code>
 
-```vue
-<ProPopup v-model:show="show" :header="false" :footer="false" preset="modal">
-  <p>纯内容弹窗</p>
-</ProPopup>
-```
+<<< @/.vitepress/theme/demos/ProPopupNoChrome.vue
 
   </template>
 </DemoBlock>

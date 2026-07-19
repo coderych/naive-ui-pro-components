@@ -95,8 +95,8 @@ const proTableStyle = c('.npro-table', {
     gap: '12px',
     padding: '10px 16px',
     marginBottom: '12px',
-    background: 'var(--n-color, #fafafa)',
-    border: '1px solid var(--n-border-color, #eee)',
+    background: 'var(--action-color)',
+    border: '1px solid var(--border-color)',
     borderRadius: '4px',
   }),
 ])
@@ -116,7 +116,7 @@ const columnSettingStyle = c('.npro-table-header__setting', {
     justifyContent: 'space-between',
     gap: '16px',
     padding: '0 6px 8px',
-    borderBottom: '1px solid var(--n-border-color, #eee)',
+    borderBottom: '1px solid var(--divider-color)',
   }),
   c('.npro-table-header__setting-list', {
     display: 'flex',

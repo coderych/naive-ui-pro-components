@@ -1,8 +1,8 @@
 import type { CheckboxProps } from 'naive-ui'
 import type { ExtractPublicPropTypes, PropType } from 'vue'
 import { checkboxGroupProps, NCheckbox, NCheckboxGroup } from 'naive-ui'
-import { computed, defineComponent } from 'vue'
-import { pickProps } from '../../shared'
+import { computed, defineComponent, ref } from 'vue'
+import { pickProps, useExposeProxy } from '../../shared'
 
 export type ProCheckboxGroupOption = CheckboxProps
 
@@ -20,14 +20,15 @@ export default defineComponent({
   name: 'ProCheckboxGroup',
   props: proCheckboxGroupProps,
   setup(props, { slots, expose }) {
+    const checkboxGroupRef = ref<InstanceType<typeof NCheckboxGroup> | null>(null)
     const nativeProps = computed(() =>
       pickProps(props as Record<string, unknown>, Object.keys(checkboxGroupProps)),
     )
 
-    expose({} as InstanceType<typeof NCheckboxGroup>)
+    expose(useExposeProxy(checkboxGroupRef))
 
     return () => (
-      <NCheckboxGroup {...nativeProps.value}>
+      <NCheckboxGroup ref={checkboxGroupRef} {...nativeProps.value}>
         {{
           default: () => slots.default
             ? slots.default()

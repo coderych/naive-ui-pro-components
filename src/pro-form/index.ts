@@ -1,4 +1,5 @@
 export { default as ProForm } from './src/ProForm'
+export type { ProFormInst } from './src/ProForm'
 export { defineProFormColumn, proFormProps } from './src/types'
 export type {
   ProFormColumn,

@@ -120,6 +120,31 @@ describe('proTable', () => {
     expect(table.params).toEqual({ keyword: '测试' })
   })
 
+  it('forwards the native data table API', () => {
+    const wrapper = mount(ProTable, {
+      props: { columns: [], data: [], option: false },
+    })
+    const nativeTable = wrapper.findComponent(NDataTable).vm as unknown as {
+      clearSorter: () => void
+    }
+    const clearSorter = vi.spyOn(nativeTable, 'clearSorter')
+    const table = wrapper.vm as unknown as { clearSorter: () => void }
+
+    table.clearSorter()
+
+    expect(clearSorter).toHaveBeenCalledOnce()
+  })
+
+  it('keeps native data table methods callable with custom table content', () => {
+    const wrapper = mount(ProTable, {
+      props: { columns: [], data: [], option: false },
+      slots: { default: () => '自定义表格' },
+    })
+    const table = wrapper.vm as unknown as { clearSorter: () => void }
+
+    expect(() => table.clearSorter()).not.toThrow()
+  })
+
   it('applies effective disabled and clearable search props consistently', async () => {
     const wrapper = mount(ProTable, {
       props: {

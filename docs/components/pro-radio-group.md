@@ -8,24 +8,7 @@
   <template #default><ProRadioGroupBasic /></template>
   <template #code>
 
-```vue
-<script setup lang="ts">
-import { ProRadioGroup } from 'naive-ui-pro-components'
-import { ref } from 'vue'
-
-const value = ref('apple')
-const options = [
-  { label: '苹果', value: 'apple' },
-  { label: '香蕉', value: 'banana' },
-  { label: '橙子', value: 'orange' },
-]
-</script>
-
-<template>
-  <ProRadioGroup v-model:value="value" :options="options" />
-  <ProRadioGroup v-model:value="value" :options="options" option-type="button" button-style="solid" />
-</template>
-```
+<<< @/.vitepress/theme/demos/ProRadioGroupBasic.vue
 
   </template>
 </DemoBlock>

@@ -8,23 +8,7 @@
   <template #default><ProCheckboxGroupBasic /></template>
   <template #code>
 
-```vue
-<script setup lang="ts">
-import { ProCheckboxGroup } from 'naive-ui-pro-components'
-import { ref } from 'vue'
-
-const value = ref(['reading'])
-const options = [
-  { label: '阅读', value: 'reading' },
-  { label: '运动', value: 'sports' },
-  { label: '音乐', value: 'music' },
-]
-</script>
-
-<template>
-  <ProCheckboxGroup v-model:value="value" :options="options" />
-</template>
-```
+<<< @/.vitepress/theme/demos/ProCheckboxGroupBasic.vue
 
   </template>
 </DemoBlock>

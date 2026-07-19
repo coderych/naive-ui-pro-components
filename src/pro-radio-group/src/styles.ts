@@ -7,22 +7,22 @@ const radioGroupStyle = c('.npro-radio-group-wrapper', {
 }, [
   c('.npro-radio-group--solid .n-radio-button.n-radio-button--checked', {
     raw: `
-      background-color: var(--n-primary-color, #18a058) !important;
-      border-color: var(--n-primary-color, #18a058) !important;
+      background-color: var(--primary-color) !important;
+      border-color: var(--primary-color) !important;
       box-shadow: none !important;
-      color: #fff !important;
+      color: var(--base-color) !important;
     `,
   }, [
     c('&:hover', {
       raw: `
-        background-color: var(--n-primary-color-hover, #36ad6a) !important;
-        border-color: var(--n-primary-color-hover, #36ad6a) !important;
+        background-color: var(--primary-color-hover) !important;
+        border-color: var(--primary-color-hover) !important;
       `,
     }),
     c('&:active', {
       raw: `
-        background-color: var(--n-primary-color-pressed, #2c8a4e) !important;
-        border-color: var(--n-primary-color-pressed, #2c8a4e) !important;
+        background-color: var(--primary-color-pressed) !important;
+        border-color: var(--primary-color-pressed) !important;
       `,
     }),
   ]),

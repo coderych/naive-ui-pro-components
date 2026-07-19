@@ -1,7 +1,7 @@
 {
   "name": "@coderych/naive-ui-pro-components",
   "type": "module",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "packageManager": "pnpm@10.33.4",
   "description": "Advanced pro components built on top of Naive UI for Vue 3",
   "author": "",

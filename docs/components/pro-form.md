@@ -8,26 +8,7 @@
   <template #default><ProFormBasic /></template>
   <template #code>
 
-```vue
-<script setup lang="ts">
-import type { ProFormColumn } from 'naive-ui-pro-components'
-import { ProForm } from 'naive-ui-pro-components'
-import { ref } from 'vue'
-
-const model = ref({ name: '', city: undefined, score: 0, status: true })
-
-const columns: ProFormColumn[] = [
-  { key: 'name', label: '姓名', component: 'input', span: 12 },
-  { key: 'city', label: '城市', component: 'select', componentProps: { options: [{ label: '北京', value: 'beijing' }] }, span: 12 },
-  { key: 'score', label: '评分', component: 'rate', span: 12 },
-  { key: 'status', label: '状态', component: 'switch', componentProps: { checkedText: '启用', uncheckedText: '禁用' }, span: 12 },
-]
-</script>
-
-<template>
-  <ProForm v-model:value="model" :columns="columns" />
-</template>
-```
+<<< @/.vitepress/theme/demos/ProFormBasic.vue
 
   </template>
 </DemoBlock>
@@ -38,17 +19,7 @@ const columns: ProFormColumn[] = [
   <template #default><ProFormAllFields /></template>
   <template #code>
 
-```ts
-const columns: ProFormColumn[] = [
-  { key: 'name', label: 'Input', component: 'input' },
-  { key: 'city', label: 'Select', component: 'select', componentProps: { options } },
-  { key: 'date', label: 'DatePicker', component: 'date-picker' },
-  { key: 'tree', label: 'TreeSelect', component: 'tree-select', componentProps: { options: treeOptions } },
-  { key: 'files', label: 'Upload', component: 'upload', componentProps: { defaultUpload: false } },
-]
-```
-
-完整示例按“基础输入、选择与评分、高级输入”分组，覆盖下方 API 列出的全部字段类型。
+<<< @/.vitepress/theme/demos/ProFormAllFields.vue
 
   </template>
 </DemoBlock>
@@ -59,25 +30,7 @@ const columns: ProFormColumn[] = [
   <template #default><ProFormValidation /></template>
   <template #code>
 
-```vue
-<script setup lang="ts">
-import type { ProFormColumn } from 'naive-ui-pro-components'
-import { ProForm } from 'naive-ui-pro-components'
-import { ref } from 'vue'
-
-const model = ref({ username: '', password: '', phone: '' })
-
-const columns: ProFormColumn[] = [
-  { key: 'username', label: '用户名', component: 'input', rule: { required: true, message: '必填', trigger: 'blur' }, span: 12 },
-  { key: 'password', label: '密码', component: 'input', rule: { min: 6, message: '至少6位', trigger: 'blur' }, span: 12 },
-  { key: 'phone', label: '手机号', component: 'input', rule: { pattern: /^1[3-9]\d{9}$/, message: '手机号格式不正确', trigger: 'blur' }, span: 12 },
-]
-</script>
-
-<template>
-  <ProForm v-model:value="model" :columns="columns" />
-</template>
-```
+<<< @/.vitepress/theme/demos/ProFormValidation.vue
 
   </template>
 </DemoBlock>
@@ -88,35 +41,7 @@ const columns: ProFormColumn[] = [
   <template #default><ProFormCustom /></template>
   <template #code>
 
-```vue
-<script setup lang="ts">
-import type { ProFormColumn } from 'naive-ui-pro-components'
-import { NButton, NSpace } from 'naive-ui'
-import { ProForm } from 'naive-ui-pro-components'
-import { h } from 'vue'
-
-const columns: ProFormColumn[] = [
-  { key: 'name', label: '姓名', component: 'input', span: 12 },
-  {
-    key: 'actions',
-    label: '操作',
-    component: 'none',
-    render(ctx) {
-      return h(NSpace, {}, {
-        default: () => [
-          h(NButton, { type: 'primary', onClick: () => console.log(ctx.model) }, { default: () => '提交' }),
-          h(NButton, { onClick: () => console.log('取消') }, { default: () => '取消' }),
-        ],
-      })
-    },
-  },
-]
-</script>
-
-<template>
-  <ProForm v-model:value="model" :columns="columns" />
-</template>
-```
+<<< @/.vitepress/theme/demos/ProFormCustom.vue
 
   </template>
 </DemoBlock>
@@ -127,12 +52,7 @@ const columns: ProFormColumn[] = [
   <template #default><ProFormNested /></template>
   <template #code>
 
-```ts
-const columns: ProFormColumn[] = [
-  { key: 'name', path: 'profile.name', label: '姓名', component: 'input' },
-  { key: 'email', path: 'profile.email', label: '邮箱', component: 'input' },
-]
-```
+<<< @/.vitepress/theme/demos/ProFormNested.vue
 
   </template>
 </DemoBlock>
@@ -143,13 +63,18 @@ const columns: ProFormColumn[] = [
   <template #default><ProFormSlot /></template>
   <template #code>
 
-```vue
-<ProForm v-model:value="model" :columns="columns">
-  <template #name="{ value, updateValue }">
-    <n-input :value="value" @update:value="updateValue" placeholder="自定义" />
+<<< @/.vitepress/theme/demos/ProFormSlot.vue
+
   </template>
-</ProForm>
-```
+</DemoBlock>
+
+## 实例方法
+
+<DemoBlock title="调用 NForm 方法" description="通过 ProFormInst 调用 validate、restoreValidation 和 invalidateLabelWidth。">
+  <template #default><ProFormMethods /></template>
+  <template #code>
+
+<<< @/.vitepress/theme/demos/ProFormMethods.vue
 
   </template>
 </DemoBlock>
@@ -164,6 +89,16 @@ const columns: ProFormColumn[] = [
 | xGap | `number` | `12` | 水平间距 |
 
 继承 Naive UI `NForm` 和 `NGrid` 全部 Props。
+
+### Methods
+
+通过组件 `ref` 调用，完整继承 Naive UI `FormInst`：
+
+| 方法 | 说明 |
+|------|------|
+| `validate(callback?, shouldRuleBeApplied?)` | 校验表单 |
+| `restoreValidation()` | 恢复表单校验状态 |
+| `invalidateLabelWidth()` | 重新计算标签宽度 |
 
 ### ProFormColumn
 

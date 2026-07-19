@@ -1,18 +1,22 @@
+import type { FormInst } from 'naive-ui'
 import type { ProFormFieldContext } from './types'
 import { formItemProps, formProps, gridItemProps, gridProps, NForm, NFormItem, NGrid, NGridItem } from 'naive-ui'
 import { computed, defineComponent, ref, watch } from 'vue'
-import { get, pickProps, set } from '../../shared'
+import { get, pickProps, set, useExposeProxy } from '../../shared'
 import { renderFormField } from './render-field'
 import { proFormProps } from './types'
 
 export { defineProFormColumn } from './types'
 export type { ProFormColumn, ProFormFieldContext, ProFormProps } from './types'
+export type ProFormInst = FormInst
 
 export default defineComponent({
   name: 'ProForm',
   props: proFormProps,
   emits: { 'update:value': (_value: object) => true },
   setup(props, { slots, emit, expose }) {
+    const formRef = ref<FormInst | null>(null)
+    expose(useExposeProxy(formRef))
     const internalModel = ref<object>(props.value ?? {})
     const model = computed({
       get: () => props.value ?? internalModel.value,
@@ -62,14 +66,13 @@ export default defineComponent({
       column.onUpdate?.(value, newModel)
     }
 
-    expose({} as InstanceType<typeof NForm>)
-
     return () => {
       if (columns.value.length === 0)
         return null
 
       return (
         <NForm
+          ref={formRef}
           {...pickProps(props as any, Object.keys(formProps))}
           model={model.value}
         >

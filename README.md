@@ -176,6 +176,8 @@ async function request(params) {
 | setParams(params) | 设置请求参数 |
 | updateParams(params) | 更新请求参数 |
 
+同时继承 `DataTableInst` 的 `filter`、`filters`、`clearFilters`、`clearSorter`、`page`、`sort`、`scrollTo`、`downloadCsv` 和 `clearFilter` 方法。
+
 ---
 
 ## ProForm
@@ -246,6 +248,10 @@ const columns = [
 | xGap | 水平间距 | `number` | `12` |
 | yGap | 垂直间距 | `number` | `0` |
 | itemResponsive | 是否响应式 | `boolean` | `false` |
+
+### Methods（通过 ref 调用）
+
+继承 `FormInst` 的 `validate()`、`restoreValidation()` 和 `invalidateLabelWidth()` 方法。
 
 ---
 

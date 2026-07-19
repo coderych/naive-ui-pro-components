@@ -1,8 +1,8 @@
 import type { DrawerContentProps, DrawerProps, ModalProps } from 'naive-ui'
 import type { ExtractPublicPropTypes, HTMLAttributes, PropType, Slots } from 'vue'
 import { drawerContentProps, drawerProps, modalProps, NButton, NDrawer, NDrawerContent, NModal } from 'naive-ui'
-import { computed, defineComponent, watch } from 'vue'
-import { formatWidth, pickProps } from '../../shared'
+import { computed, defineComponent, ref, watch } from 'vue'
+import { formatWidth, pickProps, useExposeProxy } from '../../shared'
 import { mountProPopupStyle } from './styles'
 
 type NativeAttrs = Pick<HTMLAttributes, 'class' | 'style'>
@@ -65,6 +65,8 @@ export default defineComponent({
     'update:show': (_value: boolean) => true,
   },
   setup(props, { emit, slots, expose }) {
+    type PopupInstance = InstanceType<typeof NDrawer> | InstanceType<typeof NModal>
+    const popupRef = ref<PopupInstance | null>(null)
     mountProPopupStyle()
     const show = computed({
       get: () => props.show ?? false,
@@ -93,7 +95,7 @@ export default defineComponent({
       ) as Slots
     }
 
-    expose({})
+    expose(useExposeProxy(popupRef))
 
     return () => {
       const popupSlots = compactSlots({
@@ -122,6 +124,7 @@ export default defineComponent({
       if (props.preset === 'drawer') {
         return (
           <NDrawer
+            ref={popupRef}
             {...pickProps(props as Record<string, unknown>, Object.keys(drawerProps))}
             {...props.drawerProps}
             show={show.value}
@@ -143,6 +146,7 @@ export default defineComponent({
 
       return (
         <NModal
+          ref={popupRef}
           {...pickProps(props as Record<string, unknown>, Object.keys(modalProps), ['footer', 'preset', 'show'])}
           {...props.modalProps}
           show={show.value}

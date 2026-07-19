@@ -1,5 +1,37 @@
-import type { Component, Slots, VNode } from 'vue'
+import type { Component, Ref, Slots, VNode } from 'vue'
 import { h } from 'vue'
+
+function isForwardableExposeKey(key: PropertyKey): boolean {
+  return typeof key === 'string'
+    && !key.startsWith('$')
+    && !key.startsWith('_')
+}
+
+/**
+ * Forward the public API of a wrapped component while preserving custom APIs.
+ */
+export function useExposeProxy<NativeInstance extends object, Extra extends object = Record<string, never>>(
+  nativeRef: Ref<NativeInstance | null>,
+  extra = {} as Extra,
+): NativeInstance & Extra {
+  return new Proxy(extra, {
+    has(target, key) {
+      return Reflect.has(target, key)
+        || (isForwardableExposeKey(key)
+          && nativeRef.value !== null
+          && key in nativeRef.value)
+    },
+    get(target, key, receiver) {
+      if (Reflect.has(target, key))
+        return Reflect.get(target, key, receiver)
+      if (!isForwardableExposeKey(key))
+        return undefined
+      const instance = nativeRef.value as Record<PropertyKey, unknown> | null
+      const value = instance?.[key]
+      return typeof value === 'function' ? value.bind(instance) : value
+    },
+  }) as NativeInstance & Extra
+}
 
 /**
  * Pick specific props from a source object, excluding specified keys.

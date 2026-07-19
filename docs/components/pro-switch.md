@@ -8,19 +8,7 @@
   <template #default><ProSwitchBasic /></template>
   <template #code>
 
-```vue
-<script setup lang="ts">
-import { ProSwitch } from 'naive-ui-pro-components'
-import { ref } from 'vue'
-
-const enabled = ref(true)
-</script>
-
-<template>
-  <ProSwitch v-model:value="enabled" checked-text="开" unchecked-text="关" />
-  <ProSwitch :value="true" disabled />
-</template>
-```
+<<< @/.vitepress/theme/demos/ProSwitchBasic.vue
 
   </template>
 </DemoBlock>

@@ -8,40 +8,7 @@
   <template #default><ProTableBasic /></template>
   <template #code>
 
-```vue
-<script setup lang="ts">
-import type { ProTableColumn } from 'naive-ui-pro-components'
-import { NTag } from 'naive-ui'
-import { ProTable } from 'naive-ui-pro-components'
-import { h, ref } from 'vue'
-
-const columns: ProTableColumn[] = [
-  { title: '姓名', key: 'name' },
-  { title: '年龄', key: 'age' },
-  {
-    title: '状态',
-    key: 'status',
-    render(row) {
-      return h(NTag, { type: row.status === 1 ? 'success' : 'warning', size: 'small' }, { default: () => row.status === 1 ? '启用' : '禁用' })
-    },
-  },
-  { title: '部门', key: 'department' },
-  { title: '角色', key: 'role' },
-  { title: '邮箱', key: 'email', ellipsis: { tooltip: true } },
-  { title: '地址', key: 'address' },
-  { title: '创建时间', key: 'createdAt' },
-]
-
-const data = ref([
-  { id: 1, name: '张三', age: 32, status: 1, department: '研发部', role: '前端工程师', email: 'zhangsan@example.com', address: '北京市朝阳区', createdAt: '2026-06-01' },
-  { id: 2, name: '李四', age: 28, status: 0, department: '产品部', role: '产品经理', email: 'lisi@example.com', address: '上海市浦东新区', createdAt: '2026-05-18' },
-])
-</script>
-
-<template>
-  <ProTable :columns="columns" :data="data" :pagination="{ pageSize: 10 }" />
-</template>
-```
+<<< @/.vitepress/theme/demos/ProTableBasic.vue
 
   </template>
 </DemoBlock>
@@ -52,37 +19,7 @@ const data = ref([
   <template #default><ProTableSearch /></template>
   <template #code>
 
-```vue
-<script setup lang="ts">
-import type { ProTableBatchAction, ProTableColumn } from 'naive-ui-pro-components'
-import { ProTable } from 'naive-ui-pro-components'
-import { ref } from 'vue'
-
-const columns: ProTableColumn[] = [
-  { title: '姓名', key: 'name', search: { component: 'input', label: '姓名' } },
-  { title: '年龄', key: 'age', search: { component: 'input-number' } },
-  { title: '状态', key: 'status', search: { component: 'select', label: '状态', options: [{ label: '启用', value: 1 }, { label: '禁用', value: 0 }] }, },
-  { title: '部门', key: 'department', search: { component: 'select', options: [{ label: '研发部', value: '研发部' }] } },
-  { title: '邮箱', key: 'email', search: true },
-  { title: '手机号', key: 'phone' },
-  { title: '地址', key: 'address', search: true },
-  { title: '创建时间', key: 'createdAt' },
-]
-
-const batchActions: ProTableBatchAction[] = [
-  { key: 'delete', label: '批量删除', type: 'error', onClick(keys) { alert(`删除 ${keys.length} 项`) } },
-]
-
-async function request(params) {
-  const res = await fetch(`/api/users?${new URLSearchParams(params)}`)
-  return res.json()
-}
-</script>
-
-<template>
-  <ProTable :columns="columns" :request="request" :batch-actions="batchActions" />
-</template>
-```
+<<< @/.vitepress/theme/demos/ProTableSearch.vue
 
   </template>
 </DemoBlock>
@@ -93,16 +30,7 @@ async function request(params) {
   <template #default><ProTableSearchFields /></template>
   <template #code>
 
-```ts
-const columns: ProTableColumn[] = [
-  { title: '关键词', key: 'keyword', search: { component: 'input' } },
-  { title: '日期', key: 'date', search: { component: 'date-picker', type: 'date' } },
-  { title: '地区', key: 'region', search: { component: 'cascader', options } },
-  { title: '组织', key: 'org', search: { component: 'tree-select', options: treeOptions } },
-  { title: '公开', key: 'visible', search: { component: 'switch' } },
-  { title: '自定义', key: 'custom', search: { component: 'render', render } },
-]
-```
+<<< @/.vitepress/theme/demos/ProTableSearchFields.vue
 
   </template>
 </DemoBlock>
@@ -113,32 +41,7 @@ const columns: ProTableColumn[] = [
   <template #default><ProTableRemote /></template>
   <template #code>
 
-```vue
-<script setup lang="ts">
-import type { ProTableColumn, ProTableRequestResult } from 'naive-ui-pro-components'
-import { ProTable } from 'naive-ui-pro-components'
-
-const columns: ProTableColumn[] = [
-  { title: '姓名', key: 'name' },
-  { title: '年龄', key: 'age', sorter: true },
-  { title: '状态', key: 'status' },
-  { title: '部门', key: 'department' },
-  { title: '邮箱', key: 'email' },
-  { title: '地址', key: 'address' },
-  { title: '创建时间', key: 'createdAt' },
-  { title: '操作', key: 'actions' },
-]
-
-async function request(params): Promise<ProTableRequestResult> {
-  const res = await fetch(`/api/users?${new URLSearchParams(params)}`)
-  return res.json()
-}
-</script>
-
-<template>
-  <ProTable :columns="columns" :request="request" />
-</template>
-```
+<<< @/.vitepress/theme/demos/ProTableRemote.vue
 
   </template>
 </DemoBlock>
@@ -149,13 +52,7 @@ async function request(params): Promise<ProTableRequestResult> {
   <template #default><ProTableColumns /></template>
   <template #code>
 
-```ts
-const columns: ProTableColumn[] = [
-  { title: '姓名', key: 'name', fixed: 'left', search: true },
-  { title: '年龄', key: 'age', sorter: true },
-  { title: '操作', key: 'action', fixed: 'right' },
-]
-```
+<<< @/.vitepress/theme/demos/ProTableColumns.vue
 
   </template>
 </DemoBlock>
@@ -166,19 +63,7 @@ const columns: ProTableColumn[] = [
   <template #default><ProTableToolbar /></template>
   <template #code>
 
-```vue
-<ProTable
-  :columns="columns"
-  :data="data"
-  :option="{
-    tableHeader: true,
-    full: true,
-    reload: true,
-    setting: true,
-    size: true,
-  }"
-/>
-```
+<<< @/.vitepress/theme/demos/ProTableToolbar.vue
 
   </template>
 </DemoBlock>
@@ -189,15 +74,18 @@ const columns: ProTableColumn[] = [
   <template #default><ProTableSlots /></template>
   <template #code>
 
-```vue
-<ProTable :columns="columns" :data="data">
-  <template #title><h3>用户列表</h3></template>
-  <template #header-extra><n-button type="primary">新增</n-button></template>
-  <template #batch-actions="{ keys }">
-    <n-button type="error" size="small">删除 {{ keys.length }} 项</n-button>
+<<< @/.vitepress/theme/demos/ProTableSlots.vue
+
   </template>
-</ProTable>
-```
+</DemoBlock>
+
+## 实例方法
+
+<DemoBlock title="调用 ProTable / NDataTable 方法" description="覆盖 ProTableInst 的全部增强方法、DataTableInst 方法和只读状态。">
+  <template #default><ProTableMethods /></template>
+  <template #code>
+
+<<< @/.vitepress/theme/demos/ProTableMethods.vue
 
   </template>
 </DemoBlock>
@@ -249,3 +137,9 @@ const columns: ProTableColumn[] = [
 | header-extra | - | 工具栏右侧额外内容 |
 | form | `ProTableFormSlotProps` | 自定义搜索字段 |
 | batch-actions | `{ keys, rows }` | 自定义批量操作栏 |
+
+### Methods
+
+除 `reload`、`request`、`reset`、`search`、`setParams`、`updateParams` 外，完整继承 Naive UI `DataTableInst`：
+
+`filter`、`filters`、`clearFilters`、`clearSorter`、`page`、`sort`、`scrollTo`、`downloadCsv`、`clearFilter`。

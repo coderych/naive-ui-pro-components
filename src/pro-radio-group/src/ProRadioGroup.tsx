@@ -1,8 +1,8 @@
 import type { RadioProps } from 'naive-ui'
 import type { ExtractPublicPropTypes, PropType } from 'vue'
-import { NRadio, NRadioButton, NRadioGroup, radioGroupProps } from 'naive-ui'
-import { computed, defineComponent } from 'vue'
-import { pickProps } from '../../shared'
+import { NEl, NRadio, NRadioButton, NRadioGroup, radioGroupProps } from 'naive-ui'
+import { computed, defineComponent, ref } from 'vue'
+import { pickProps, useExposeProxy } from '../../shared'
 import { mountProRadioGroupStyle } from './styles'
 
 export type ProRadioGroupOption = RadioProps
@@ -31,6 +31,7 @@ export default defineComponent({
   name: 'ProRadioGroup',
   props: proRadioGroupProps,
   setup(props, { slots, expose }) {
+    const radioGroupRef = ref<InstanceType<typeof NRadioGroup> | null>(null)
     mountProRadioGroupStyle()
     const nativeProps = computed(() =>
       pickProps(props as Record<string, unknown>, Object.keys(radioGroupProps)),
@@ -43,13 +44,13 @@ export default defineComponent({
       },
     ])
 
-    expose({} as InstanceType<typeof NRadioGroup>)
+    expose(useExposeProxy(radioGroupRef))
 
     return () => {
       const Component = props.optionType === 'button' ? NRadioButton : NRadio
       return (
-        <div class="npro-radio-group-wrapper">
-          <NRadioGroup {...nativeProps.value} class={rootClass.value}>
+        <NEl class="npro-radio-group-wrapper">
+          <NRadioGroup ref={radioGroupRef} {...nativeProps.value} class={rootClass.value}>
             {{
               default: () => slots.default
                 ? slots.default()
@@ -61,7 +62,7 @@ export default defineComponent({
                   )),
             }}
           </NRadioGroup>
-        </div>
+        </NEl>
       )
     }
   },
