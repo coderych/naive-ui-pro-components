@@ -31,9 +31,9 @@ pnpm add @coderych/naive-ui-pro-components
 ### 全局注册
 
 ```ts
-import { createApp } from 'vue'
-import naive from 'naive-ui'
 import NaiveUIProComponents from '@coderych/naive-ui-pro-components'
+import naive from 'naive-ui'
+import { createApp } from 'vue'
 import App from './App.vue'
 
 const app = createApp(App)
@@ -85,8 +85,8 @@ const data = [
 
 ```vue
 <script setup lang="ts">
-import { ref } from 'vue'
 import { ProTable } from '@coderych/naive-ui-pro-components'
+import { ref } from 'vue'
 
 const columns = [
   { key: 'id', title: 'ID' },
@@ -116,11 +116,11 @@ import { ProTable } from '@coderych/naive-ui-pro-components'
 const columns = [
   { key: 'id', title: 'ID' },
   { key: 'name', title: '姓名', search: true },
-  { key: 'status', title: '状态', search: { type: 'select', options: [...] } }
+  { key: 'status', title: '状态', search: { type: 'select', options: [] } }
 ]
 
 // 远程请求函数
-const request = async (params) => {
+async function request(params) {
   const res = await fetch('/api/users', { params })
   return {
     data: res.data.list,
@@ -186,8 +186,8 @@ const request = async (params) => {
 
 ```vue
 <script setup lang="ts">
-import { ref } from 'vue'
 import { ProForm } from '@coderych/naive-ui-pro-components'
+import { ref } from 'vue'
 
 const model = ref({
   name: '',
@@ -257,14 +257,16 @@ const columns = [
 
 ```vue
 <script setup lang="ts">
-import { ref } from 'vue'
 import { ProPopup } from '@coderych/naive-ui-pro-components'
+import { ref } from 'vue'
 
 const show = ref(false)
 </script>
 
 <template>
-  <n-button @click="show = true">打开弹窗</n-button>
+  <n-button @click="show = true">
+    打开弹窗
+  </n-button>
 
   <ProPopup
     v-model:show="show"
@@ -331,8 +333,8 @@ const show = ref(false)
 
 ```vue
 <script setup lang="ts">
-import { ref } from 'vue'
 import { ProCheckboxGroup } from '@coderych/naive-ui-pro-components'
+import { ref } from 'vue'
 
 const value = ref(['option1'])
 const options = [
@@ -367,8 +369,8 @@ const options = [
 
 ```vue
 <script setup lang="ts">
-import { ref } from 'vue'
 import { ProRadioGroup } from '@coderych/naive-ui-pro-components'
+import { ref } from 'vue'
 
 const value = ref('option1')
 const options = [
@@ -416,8 +418,8 @@ const options = [
 
 ```vue
 <script setup lang="ts">
-import { ref } from 'vue'
 import { ProSwitch } from '@coderych/naive-ui-pro-components'
+import { ref } from 'vue'
 
 const value = ref(false)
 </script>
@@ -476,12 +478,12 @@ provide()
 
 ```ts
 import type {
-  ProTableProps,
+  ProFormColumn,
+  ProFormProps,
+  ProPopupProps,
   ProTableColumn,
   ProTableInstance,
-  ProFormProps,
-  ProFormColumn,
-  ProPopupProps
+  ProTableProps
 } from '@coderych/naive-ui-pro-components'
 ```
 

@@ -1,0 +1,13 @@
+import "./chunk-UVKRO5ER.js";
+
+// node_modules/.pnpm/@iconify-icons+heroicons@1.2.9/node_modules/@iconify-icons/heroicons/arrows-pointing-in.js
+var data = {
+  "width": 24,
+  "height": 24,
+  "body": '<path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 9V4.5M9 9H4.5M9 9L3.75 3.75M9 15v4.5M9 15H4.5M9 15l-5.25 5.25M15 9h4.5M15 9V4.5M15 9l5.25-5.25M15 15h4.5M15 15v4.5m0-4.5l5.25 5.25"/>'
+};
+var arrows_pointing_in_default = data;
+export {
+  arrows_pointing_in_default as default
+};
+//# sourceMappingURL=@iconify-icons_heroicons_arrows-pointing-in.js.map
