@@ -134,9 +134,7 @@ export function set(obj: any, path: string, value: any): void {
   let current = obj
   for (let i = 0; i < keys.length - 1; i++) {
     const key = keys[i]
-    if (current[key] === undefined || current[key] === null) {
-      current[key] = /^\d+$/.test(keys[i + 1]) ? [] : {}
-    }
+    current[key] ??= /^\d+$/.test(keys[i + 1]) ? [] : {}
     current = current[key]
   }
   current[keys[keys.length - 1]] = value
@@ -179,7 +177,7 @@ export function debounce<T extends (...args: any[]) => void>(
   const debounced = ((...args: any[]) => {
     if (timer)
       clearTimeout(timer)
-    timer = setTimeout(() => fn(...args), delay)
+    timer = setTimeout(fn, delay, ...args)
   }) as T & { cancel: () => void }
   debounced.cancel = () => {
     if (timer) {
