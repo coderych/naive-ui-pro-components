@@ -3,6 +3,11 @@
 基于 [Naive UI](https://www.naiveui.com/) 的企业级 Vue 3 组件库，开箱即用。
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+[![Docs](https://img.shields.io/badge/Docs-在线文档-blue)](https://coderych.github.io/naive-ui-pro-components/)
+
+## 📖 文档
+
+在线文档：https://coderych.github.io/naive-ui-pro-components/
 
 ## ✨ 特性
 
