@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../../../node_modules/.pnpm/@iconify-icons+heroicons@1.2.9/node_modules/@iconify-icons/heroicons/bars-2.js"],
-  "sourcesContent": ["const data = {\n\t\"width\": 24,\n\t\"height\": 24,\n\t\"body\": \"<path fill=\\\"none\\\" stroke=\\\"currentColor\\\" stroke-linecap=\\\"round\\\" stroke-linejoin=\\\"round\\\" stroke-width=\\\"1.5\\\" d=\\\"M3.75 9h16.5m-16.5 6.75h16.5\\\"/>\"\n};\nexport default data;\n"],
-  "mappings": ";;;AAAA,IAAM,OAAO;AAAA,EACZ,SAAS;AAAA,EACT,UAAU;AAAA,EACV,QAAQ;AACT;AACA,IAAO,iBAAQ;",
-  "names": []
-}
