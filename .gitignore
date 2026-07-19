@@ -1,0 +1,14 @@
+node_modules
+.DS_Store
+dist
+es
+lib
+*.local
+.env
+.env.*
+!.env.example
+.cache
+*.log
+.vitepress/cache
+.vitepress/dist
+coverage

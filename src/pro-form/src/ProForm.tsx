@@ -1,0 +1,112 @@
+import type { ProFormFieldContext } from './types'
+import { formItemProps, formProps, gridItemProps, gridProps, NForm, NFormItem, NGrid, NGridItem } from 'naive-ui'
+import { computed, defineComponent, ref, watch } from 'vue'
+import { get, pickProps, set } from '../../shared'
+import { renderFormField } from './render-field'
+import { proFormProps } from './types'
+
+export { defineProFormColumn } from './types'
+export type { ProFormColumn, ProFormFieldContext, ProFormProps } from './types'
+
+export default defineComponent({
+  name: 'ProForm',
+  props: proFormProps,
+  emits: { 'update:value': (_value: object) => true },
+  setup(props, { slots, emit, expose }) {
+    const internalModel = ref<object>(props.value ?? {})
+    const model = computed({
+      get: () => props.value ?? internalModel.value,
+      set: (val: object) => {
+        internalModel.value = val
+        emit('update:value', val)
+      },
+    })
+
+    watch(() => props.value, (val) => {
+      if (val !== undefined)
+        internalModel.value = val
+    })
+
+    const columns = computed(() =>
+      (props.columns as any[])
+        .filter((col: any) => col.enabled !== false)
+        .slice()
+        .sort((a: any, b: any) => (a.sort ?? 10) - (b.sort ?? 10)),
+    )
+
+    function createFieldContext(column: any, index: number): ProFormFieldContext {
+      const path = column.path ?? column.key
+      return {
+        column,
+        index,
+        model: model.value,
+        path,
+        value: get(model.value, path),
+        updateValue: (value: unknown) => updateFieldValue(column, path, value),
+        gridItemProps: {
+          ...pickProps(column, Object.keys(gridItemProps)),
+          ...column.gridItemProps ?? {},
+        },
+        formItemProps: {
+          ...pickProps(column, Object.keys(formItemProps)),
+          path,
+          ...column.formItemProps ?? {},
+        },
+      }
+    }
+
+    function updateFieldValue(column: any, path: string, value: unknown): void {
+      const newModel = { ...model.value }
+      set(newModel, path, value)
+      model.value = newModel
+      column.onUpdate?.(value, newModel)
+    }
+
+    expose({} as InstanceType<typeof NForm>)
+
+    return () => {
+      if (columns.value.length === 0)
+        return null
+
+      return (
+        <NForm
+          {...pickProps(props as any, Object.keys(formProps))}
+          model={model.value}
+        >
+          <NGrid cols={24} {...pickProps(props as any, Object.keys(gridProps))}>
+            {columns.value.map((column: any, index: number) => {
+              const context = createFieldContext(column, index)
+              const fieldSlot = slots[column.key]
+              const gridItemPropVal = column.gridItemProps ?? {}
+
+              return (
+                <NGridItem
+                  {...gridItemPropVal}
+                  key={column.key}
+                  span={column.span ?? gridItemPropVal.span ?? 24}
+                >
+                  {{
+                    default: () => {
+                      if (fieldSlot)
+                        return fieldSlot(context)
+                      if (column.component === 'none')
+                        return null
+                      return (
+                        <NFormItem
+                          {...context.formItemProps}
+                          {...column.formItemSlots}
+                        >
+                          {{ default: () => renderFormField(column, context) }}
+                        </NFormItem>
+                      )
+                    },
+                  }}
+                </NGridItem>
+              )
+            })}
+          </NGrid>
+        </NForm>
+      )
+    }
+  },
+})
