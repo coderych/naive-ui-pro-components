@@ -1,5 +1,5 @@
 import type { RadioProps } from 'naive-ui'
-import type { ExtractPublicPropTypes, PropType } from 'vue'
+import type { ExtractPublicPropTypes, PropType, SlotsType, VNodeChild } from 'vue'
 import { NEl, NRadio, NRadioButton, NRadioGroup, radioGroupProps } from 'naive-ui'
 import { computed, defineComponent, ref } from 'vue'
 import { pickProps, useExposeProxy } from '../../shared'
@@ -26,10 +26,14 @@ export const proRadioGroupProps = {
 } as const
 
 export type ProRadioGroupProps = ExtractPublicPropTypes<typeof proRadioGroupProps>
+export interface ProRadioGroupSlots {
+  default?: () => VNodeChild
+}
 
 export default defineComponent({
   name: 'ProRadioGroup',
   props: proRadioGroupProps,
+  slots: Object as SlotsType<ProRadioGroupSlots>,
   setup(props, { slots, expose }) {
     const radioGroupRef = ref<InstanceType<typeof NRadioGroup> | null>(null)
     mountProRadioGroupStyle()

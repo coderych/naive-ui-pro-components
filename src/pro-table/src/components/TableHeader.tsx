@@ -1,4 +1,5 @@
 import type { DataTableProps } from 'naive-ui'
+import type { SlotsType, VNodeChild } from 'vue'
 import type { ProTableColumnFixed, ProTableColumnKey, ProTableColumnOption } from '../columns-state'
 import type { ProTableOption } from '../types'
 import { Icon } from '@iconify/vue'
@@ -6,6 +7,11 @@ import { NButton, NCheckbox, NDropdown, NEl, NPopover, NTooltip } from 'naive-ui
 import { computed, defineComponent, ref, watch } from 'vue'
 import { VueDraggable } from 'vue-draggable-plus'
 import { useProLocale } from '../../../config-provider'
+
+interface TableHeaderSlots {
+  extra?: () => VNodeChild
+  title?: () => VNodeChild
+}
 
 export default defineComponent({
   name: 'ProTableHeader',
@@ -26,6 +32,7 @@ export default defineComponent({
     'update:size': (_value: NonNullable<DataTableProps['size']>) => true,
     'update:visibleKeys': (_value: ProTableColumnKey[]) => true,
   },
+  slots: Object as SlotsType<TableHeaderSlots>,
   setup(props, { emit, slots }) {
     const locale = useProLocale()
 

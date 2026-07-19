@@ -1,10 +1,15 @@
 import type { FormProps } from 'naive-ui'
+import type { SlotsType, VNodeChild } from 'vue'
 import type { ProTableFormSlotProps, ProTableInternalColumn, ProTableOption, ProTableSearchOption } from '../types'
 import { NButton, NCard, NForm, NFormItemGi, NGrid, NGridItem } from 'naive-ui'
 import { computed, defineComponent, onBeforeUnmount, ref } from 'vue'
 import { useProLocale } from '../../../config-provider'
 import { getColumnKey, getColumnTitle } from '../../../shared'
 import { renderSearchField, resolveSearchFieldProps } from '../search-field'
+
+interface QueryFormSlots {
+  default?: (props: ProTableFormSlotProps<never>) => VNodeChild
+}
 
 export default defineComponent({
   name: 'ProTableQueryForm',
@@ -22,6 +27,7 @@ export default defineComponent({
     'search': () => true,
     'update:modelValue': (_value: Record<string, unknown>) => true,
   },
+  slots: Object as SlotsType<QueryFormSlots>,
   setup(props, { emit, slots }) {
     const locale = useProLocale()
 

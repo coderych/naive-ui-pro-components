@@ -1,6 +1,6 @@
 import type { DataTableInst, DataTableProps } from 'naive-ui'
-import type { ComponentPublicInstance, Slot } from 'vue'
-import type { ProTableBatchAction, ProTableInst, ProTableOption, ProTableRecord, ProTableSorter } from './types'
+import type { ComponentPublicInstance, Slot, SlotsType } from 'vue'
+import type { ProTableBatchAction, ProTableInst, ProTableOption, ProTableRecord, ProTableSlots, ProTableSorter } from './types'
 import { dataTableProps, NButton, NCard, NDataTable, NEl, NIcon, NScrollbar, NSpace, NText } from 'naive-ui'
 import { computed, defineComponent, nextTick, onBeforeUnmount, ref, shallowRef, watch } from 'vue'
 import { invokeHandlers, pickProps, runSafely, useExposeProxy } from '../../shared'
@@ -57,6 +57,7 @@ export type {
 export default defineComponent({
   name: 'ProTable',
   props: proTableProps,
+  slots: Object as SlotsType<ProTableSlots>,
   emits: {
     'reset': () => true,
     'search': (_params: Record<string, unknown>) => true,

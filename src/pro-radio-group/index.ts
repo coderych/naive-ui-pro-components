@@ -4,4 +4,5 @@ export type {
   ProRadioGroupOption,
   ProRadioGroupOptionType,
   ProRadioGroupProps,
+  ProRadioGroupSlots,
 } from './src/ProRadioGroup'

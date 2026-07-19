@@ -135,14 +135,15 @@ describe('proTable', () => {
     expect(clearSorter).toHaveBeenCalledOnce()
   })
 
-  it('keeps native data table methods callable with custom table content', () => {
+  it('requires optional access to native methods with custom table content', () => {
     const wrapper = mount(ProTable, {
       props: { columns: [], data: [], option: false },
       slots: { default: () => '自定义表格' },
     })
-    const table = wrapper.vm as unknown as { clearSorter: () => void }
+    const table = wrapper.vm as unknown as { clearSorter?: () => void }
 
-    expect(() => table.clearSorter()).not.toThrow()
+    expect(() => table.clearSorter?.()).not.toThrow()
+    expect(() => table.clearSorter!()).toThrow(TypeError)
   })
 
   it('applies effective disabled and clearable search props consistently', async () => {

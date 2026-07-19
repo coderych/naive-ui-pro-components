@@ -1,5 +1,5 @@
 import type { DrawerContentProps, DrawerProps, ModalProps } from 'naive-ui'
-import type { ExtractPublicPropTypes, HTMLAttributes, PropType, Slots } from 'vue'
+import type { ExtractPublicPropTypes, HTMLAttributes, PropType, Slots, SlotsType, VNodeChild } from 'vue'
 import { drawerContentProps, drawerProps, modalProps, NButton, NDrawer, NDrawerContent, NModal } from 'naive-ui'
 import { computed, defineComponent, ref, watch } from 'vue'
 import { formatWidth, pickProps, useExposeProxy } from '../../shared'
@@ -54,10 +54,20 @@ export const proPopupProps = {
 } as const
 
 export type ProPopupProps = ExtractPublicPropTypes<typeof proPopupProps>
+export interface ProPopupSlots {
+  'default'?: (props?: { draggableClass: string }) => VNodeChild
+  'action'?: () => VNodeChild
+  'close'?: () => VNodeChild
+  'footer'?: () => VNodeChild
+  'header'?: () => VNodeChild
+  'header-extra'?: () => VNodeChild
+  'icon'?: () => VNodeChild
+}
 
 export default defineComponent({
   name: 'ProPopup',
   props: proPopupProps,
+  slots: Object as SlotsType<ProPopupSlots>,
   emits: {
     'ok': () => true,
     'cancel': () => true,

@@ -3,6 +3,7 @@ import type {
   DataTableColumn,
   DataTableInst,
   DataTableProps,
+  DataTableSlots,
   DataTableSortState,
   DatePickerProps,
   FormProps,
@@ -216,7 +217,21 @@ export const proTableProps = {
 export type ProTableSetupProps = ExtractPropTypes<typeof proTableProps>
 export type ProTableProps = ExtractPublicPropTypes<typeof proTableProps>
 
-export interface ProTableInst<T = ProTableRecord> extends DataTableInst {
+export interface ProTableBatchActionsSlotProps<T = ProTableRecord> {
+  keys: (string | number)[]
+  rows: T[]
+}
+
+export type ProTableSlots = Omit<DataTableSlots, 'default'> & {
+  'default'?: (props: Readonly<ProTableSetupProps>) => VNodeChild
+  'form'?: (props: ProTableFormSlotProps) => VNodeChild
+  'header'?: () => VNodeChild
+  'header-extra'?: () => VNodeChild
+  'title'?: () => VNodeChild
+  'batch-actions'?: (props: ProTableBatchActionsSlotProps) => VNodeChild
+}
+
+export interface ProTableApi<T = ProTableRecord> {
   readonly data: T[]
   readonly index: number
   readonly params: Record<string, unknown>
@@ -227,6 +242,8 @@ export interface ProTableInst<T = ProTableRecord> extends DataTableInst {
   setParams: (params: Record<string, unknown>) => void
   updateParams: (params: Record<string, unknown>) => void
 }
+
+export type ProTableInst<T = ProTableRecord> = ProTableApi<T> & Partial<DataTableInst>
 
 export type ProTableSorter = DataTableSortState | DataTableSortState[] | null
 export type ProTablePagination = DataTableProps['pagination']

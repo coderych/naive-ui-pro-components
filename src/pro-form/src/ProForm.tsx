@@ -1,5 +1,6 @@
 import type { FormInst } from 'naive-ui'
-import type { ProFormFieldContext } from './types'
+import type { SlotsType } from 'vue'
+import type { ProFormFieldContext, ProFormSlots } from './types'
 import { formItemProps, formProps, gridItemProps, gridProps, NForm, NFormItem, NGrid, NGridItem } from 'naive-ui'
 import { computed, defineComponent, ref, watch } from 'vue'
 import { get, pickProps, set, useExposeProxy } from '../../shared'
@@ -7,12 +8,13 @@ import { renderFormField } from './render-field'
 import { proFormProps } from './types'
 
 export { defineProFormColumn } from './types'
-export type { ProFormColumn, ProFormFieldContext, ProFormProps } from './types'
+export type { ProFormColumn, ProFormFieldContext, ProFormProps, ProFormSlots } from './types'
 export type ProFormInst = FormInst
 
 export default defineComponent({
   name: 'ProForm',
   props: proFormProps,
+  slots: Object as SlotsType<ProFormSlots>,
   emits: { 'update:value': (_value: object) => true },
   setup(props, { slots, emit, expose }) {
     const formRef = ref<FormInst | null>(null)

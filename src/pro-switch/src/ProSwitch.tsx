@@ -1,4 +1,5 @@
-import type { Component, ExtractPublicPropTypes, PropType } from 'vue'
+import type { SwitchSlots } from 'naive-ui'
+import type { Component, ExtractPublicPropTypes, PropType, SlotsType } from 'vue'
 import { NSwitch, switchProps } from 'naive-ui'
 import { computed, defineComponent, ref } from 'vue'
 import { createIconSlot, createTextSlot, pickProps, useExposeProxy } from '../../shared'
@@ -13,10 +14,12 @@ export const proSwitchProps = {
 } as const
 
 export type ProSwitchProps = ExtractPublicPropTypes<typeof proSwitchProps>
+export type ProSwitchSlots = SwitchSlots
 
 export default defineComponent({
   name: 'ProSwitch',
   props: proSwitchProps,
+  slots: Object as SlotsType<ProSwitchSlots>,
   setup(props, { slots, expose }) {
     const switchRef = ref<InstanceType<typeof NSwitch> | null>(null)
     const nativeProps = computed(() =>

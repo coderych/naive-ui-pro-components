@@ -8,4 +8,5 @@ export type {
   ProPopupModalProps,
   ProPopupPreset,
   ProPopupProps,
+  ProPopupSlots,
 } from './src/ProPopup'

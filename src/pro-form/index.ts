@@ -11,4 +11,5 @@ export type {
   ProFormFieldContext,
   ProFormFieldSlot,
   ProFormProps,
+  ProFormSlots,
 } from './src/types'

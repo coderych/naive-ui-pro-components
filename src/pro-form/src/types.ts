@@ -73,6 +73,8 @@ export interface ProFormFieldContext {
   formItemProps?: FormItemProps
 }
 
+export type ProFormSlots = Record<string, (context: ProFormFieldContext) => VNodeChild>
+
 export interface ProFormColumnBase {
   /** Field unique key; also used as model path when path is not set. */
   key: string
