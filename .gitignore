@@ -9,6 +9,6 @@ lib
 !.env.example
 .cache
 *.log
-.vitepress/cache
-.vitepress/dist
+docs/.vitepress/cache
+docs/.vitepress/dist
 coverage
