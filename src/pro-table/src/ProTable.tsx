@@ -42,6 +42,7 @@ export type {
   ProTableBatchAction,
   ProTableColumn,
   ProTableFormSlotProps,
+  ProTableHeaderSlotProps,
   ProTableInst,
   ProTableOption,
   ProTablePagination,
@@ -51,6 +52,7 @@ export type {
   ProTableRequestResult,
   ProTableSearchComponent,
   ProTableSearchOption,
+  ProTableSelectionSlotProps,
   ProTableSorter,
 } from './types'
 
@@ -73,7 +75,6 @@ export default defineComponent({
     const internalCheckedKeys = ref<(string | number)[]>(props.defaultCheckedRowKeys ?? [])
 
     const requestState = useProTableRequest(props)
-    const columnsState = useProTableColumns(props)
 
     const checkedKeys = computed({
       get: () => props.checkedRowKeys ?? internalCheckedKeys.value,
@@ -86,6 +87,10 @@ export default defineComponent({
     const hasBatchActions = computed(() =>
       (props.batchActions && props.batchActions.length > 0) || !!slots['batch-actions'],
     )
+    const columnsState = useProTableColumns(props, {
+      hasBatchActions,
+      indexOffset: requestState.index,
+    })
 
     const selectedRows = computed(() => {
       if (!props.rowKey)
@@ -207,16 +212,11 @@ export default defineComponent({
     return () => {
       const showSearch = option.value !== false && option.value.search !== false
       const showTableHeader = option.value !== false && option.value.tableHeader !== false
-      const tableColumns = hasBatchActions.value
-        && !columnsState.columns.value.some(column => column.type === 'selection')
-        ? [{ type: 'selection' as const }, ...columnsState.columns.value]
-        : columnsState.columns.value
-
       const dtProps: Record<string, unknown> = {
         ...pickProps(props as any, Object.keys(dataTableProps)),
         'key': tableRenderKey.value,
         'ref': changeRef,
-        'columns': tableColumns,
+        'columns': columnsState.columns.value,
         'data': requestState.data.value,
         'loading': requestState.loading.value,
         'pagination': requestState.pagination.value,
@@ -239,6 +239,10 @@ export default defineComponent({
       const dtSlots = Object.fromEntries(
         Object.entries(slots).filter(([k, v]) => !reservedSlots.has(k) && !!v),
       ) as Record<string, Slot>
+      const selectionSlotProps = {
+        keys: checkedKeys.value,
+        rows: selectedRows.value,
+      }
 
       const content = (
         <div class="npro-table__content">
@@ -260,7 +264,7 @@ export default defineComponent({
 
           <NCard class="npro-table__card" size="small">
             {showTableHeader && (slots.header
-              ? slots.header()
+              ? slots.header(selectionSlotProps)
               : (
                   <TableHeader
                     columnOptions={columnsState.columnOptions.value}
@@ -281,14 +285,21 @@ export default defineComponent({
                     }}
                     onUpdate:visibleKeys={columnsState.setVisibleKeys}
                   >
-                    {{ extra: slots['header-extra'], title: slots.title }}
+                    {{
+                      extra: slots['header-extra']
+                        ? () => slots['header-extra']!(selectionSlotProps)
+                        : undefined,
+                      title: slots.title
+                        ? () => slots.title!(selectionSlotProps)
+                        : undefined,
+                    }}
                   </TableHeader>
                 ))}
 
             {hasBatchActions.value && checkedKeys.value.length > 0 && (
               <div class="npro-table__batch-bar">
                 {slots['batch-actions']
-                  ? slots['batch-actions']({ keys: checkedKeys.value, rows: selectedRows.value })
+                  ? slots['batch-actions'](selectionSlotProps)
                   : (
                       <NSpace align="center">
                         <NText strong>

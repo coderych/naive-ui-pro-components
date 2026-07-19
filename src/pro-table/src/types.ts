@@ -212,22 +212,33 @@ export const proTableProps = {
     type: Number,
     default: 300,
   },
+  showIndex: {
+    type: Boolean,
+    default: true,
+  },
+  continuousIndex: {
+    type: Boolean,
+    default: true,
+  },
 } as const
 
 export type ProTableSetupProps = ExtractPropTypes<typeof proTableProps>
 export type ProTableProps = ExtractPublicPropTypes<typeof proTableProps>
 
-export interface ProTableBatchActionsSlotProps<T = ProTableRecord> {
+export interface ProTableSelectionSlotProps<T = ProTableRecord> {
   keys: (string | number)[]
   rows: T[]
 }
 
+export type ProTableHeaderSlotProps<T = ProTableRecord> = ProTableSelectionSlotProps<T>
+export type ProTableBatchActionsSlotProps<T = ProTableRecord> = ProTableSelectionSlotProps<T>
+
 export type ProTableSlots = Omit<DataTableSlots, 'default'> & {
   'default'?: (props: Readonly<ProTableSetupProps>) => VNodeChild
   'form'?: (props: ProTableFormSlotProps) => VNodeChild
-  'header'?: () => VNodeChild
-  'header-extra'?: () => VNodeChild
-  'title'?: () => VNodeChild
+  'header'?: (props: ProTableHeaderSlotProps) => VNodeChild
+  'header-extra'?: (props: ProTableHeaderSlotProps) => VNodeChild
+  'title'?: (props: ProTableHeaderSlotProps) => VNodeChild
   'batch-actions'?: (props: ProTableBatchActionsSlotProps) => VNodeChild
 }
 
@@ -243,7 +254,7 @@ export interface ProTableApi<T = ProTableRecord> {
   updateParams: (params: Record<string, unknown>) => void
 }
 
-export type ProTableInst<T = ProTableRecord> = ProTableApi<T> & Partial<DataTableInst>
+export type ProTableInst<T = ProTableRecord> = ProTableApi<T> & DataTableInst
 
 export type ProTableSorter = DataTableSortState | DataTableSortState[] | null
 export type ProTablePagination = DataTableProps['pagination']

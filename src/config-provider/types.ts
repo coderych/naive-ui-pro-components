@@ -24,6 +24,10 @@ export interface ProLocaleMessages {
   densityLoose: string
   /** Column settings tooltip */
   columnSetting: string
+  /** Selection column label */
+  selectionColumn: string
+  /** Row index column label */
+  indexColumn: string
   /** Select all checkbox label */
   selectAll: string
   /** Reset button text */

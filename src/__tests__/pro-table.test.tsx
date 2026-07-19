@@ -6,6 +6,26 @@ import TableHeader from '../pro-table/src/components/TableHeader'
 import ProTable from '../pro-table/src/ProTable'
 
 describe('proTable', () => {
+  it('uses the Naive UI scrollbar for column settings', async () => {
+    const header = mount(TableHeader, {
+      attachTo: document.body,
+      props: {
+        columnOptions: [{ key: 'name', label: '姓名', fixed: undefined }],
+        full: false,
+        loading: false,
+        option: { setting: true },
+        size: 'medium',
+        visibleKeys: ['name'],
+      },
+    })
+
+    await header.get('[aria-label="列设置"]').trigger('click')
+    await nextTick()
+
+    expect(document.body.querySelector('.npro-table-header__setting-scrollbar')).not.toBeNull()
+    header.unmount()
+  })
+
   it('adds a selection column and invokes an action with selected rows', async () => {
     const onClick = vi.fn()
     const data = [
@@ -33,6 +53,43 @@ describe('proTable', () => {
     expect(onClick).toHaveBeenCalledWith([2], [data[1]])
   })
 
+  it('exposes selected keys and rows to table header slots', async () => {
+    const data = [
+      { id: 1, name: '张三' },
+      { id: 2, name: '李四' },
+    ]
+    const header = vi.fn(() => '自定义表头')
+    const title = vi.fn(() => '标题')
+    const headerExtra = vi.fn(() => '额外操作')
+    const wrapper = mount(ProTable, {
+      props: {
+        batchActions: [{ key: 'delete', label: '批量删除', onClick: vi.fn() }],
+        columns: [{ key: 'name', title: '姓名' }],
+        data,
+      },
+      slots: { title, 'header-extra': headerExtra },
+    })
+
+    wrapper.findComponent(NDataTable).vm.$emit('update:checkedRowKeys', [2])
+    await nextTick()
+
+    expect(title).toHaveBeenLastCalledWith({ keys: [2], rows: [data[1]] })
+    expect(headerExtra).toHaveBeenLastCalledWith({ keys: [2], rows: [data[1]] })
+
+    const customHeaderWrapper = mount(ProTable, {
+      props: {
+        batchActions: [{ key: 'delete', label: '批量删除', onClick: vi.fn() }],
+        columns: [{ key: 'name', title: '姓名' }],
+        data,
+      },
+      slots: { header },
+    })
+    customHeaderWrapper.findComponent(NDataTable).vm.$emit('update:checkedRowKeys', [1])
+    await nextTick()
+
+    expect(header).toHaveBeenLastCalledWith({ keys: [1], rows: [data[0]] })
+  })
+
   it('does not add a duplicate selection column', () => {
     const wrapper = mount(ProTable, {
       props: {
@@ -50,6 +107,60 @@ describe('proTable', () => {
     expect(columns.filter(column => column.type === 'selection')).toHaveLength(1)
   })
 
+  it('includes the generated selection column in column settings', async () => {
+    const wrapper = mount(ProTable, {
+      props: {
+        batchActions: [{ key: 'delete', label: '批量删除', onClick: vi.fn() }],
+        columns: [{ key: 'name', title: '姓名' }],
+        data: [],
+      },
+    })
+
+    const header = wrapper.findComponent(TableHeader)
+    const options = header.props('columnOptions') as Array<{ key: string, label: string }>
+    expect(options).toContainEqual({ key: '__npro_selection__', label: '选择', fixed: undefined })
+
+    header.vm.$emit('update:visibleKeys', ['name'])
+    await nextTick()
+    expect((wrapper.findComponent(NDataTable).props('columns') as Array<{ type?: string }>)
+      .some(column => column.type === 'selection')).toBe(false)
+  })
+
+  it('renders page-local and continuous row indexes and exposes the index column setting', async () => {
+    const wrapper = mount(ProTable, {
+      props: {
+        columns: [{ key: 'name', title: '姓名' }],
+        data: Array.from({ length: 20 }, (_, index) => ({ id: index + 1, name: `用户${index + 1}` })),
+        pagination: { page: 2, pageSize: 10 },
+        showIndex: true,
+      },
+    })
+
+    const header = wrapper.findComponent(TableHeader)
+    expect(header.props('columnOptions')).toContainEqual({
+      key: '__npro_index__',
+      label: '序号',
+      fixed: undefined,
+    })
+
+    const getIndexRender = () => {
+      const columns = wrapper.findComponent(NDataTable).props('columns') as Array<{
+        key?: string
+        render?: (row: unknown, index: number) => number
+      }>
+      return columns.find(column => column.key === '__npro_index__')!.render!
+    }
+    expect(getIndexRender()({}, 0)).toBe(11)
+
+    await wrapper.setProps({ continuousIndex: false })
+    expect(getIndexRender()({}, 0)).toBe(1)
+
+    header.vm.$emit('update:visibleKeys', ['name'])
+    await nextTick()
+    expect((wrapper.findComponent(NDataTable).props('columns') as Array<{ key?: string }>)
+      .some(column => column.key === '__npro_index__')).toBe(false)
+  })
+
   it('preserves multiple columns without keys', () => {
     const wrapper = mount(ProTable, {
       props: {
@@ -60,6 +171,7 @@ describe('proTable', () => {
         ],
         data: [],
         option: false,
+        showIndex: false,
       },
     })
 
@@ -133,17 +245,6 @@ describe('proTable', () => {
     table.clearSorter()
 
     expect(clearSorter).toHaveBeenCalledOnce()
-  })
-
-  it('requires optional access to native methods with custom table content', () => {
-    const wrapper = mount(ProTable, {
-      props: { columns: [], data: [], option: false },
-      slots: { default: () => '自定义表格' },
-    })
-    const table = wrapper.vm as unknown as { clearSorter?: () => void }
-
-    expect(() => table.clearSorter?.()).not.toThrow()
-    expect(() => table.clearSorter!()).toThrow(TypeError)
   })
 
   it('applies effective disabled and clearable search props consistently', async () => {

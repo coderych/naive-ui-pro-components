@@ -16,6 +16,8 @@ const defaultLocale: ProLocaleMessages = {
   densityDefault: '默认',
   densityLoose: '宽松',
   columnSetting: '列设置',
+  selectionColumn: '选择',
+  indexColumn: '序号',
   selectAll: '全选',
   reset: '重置',
   search: '搜索',

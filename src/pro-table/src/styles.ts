@@ -104,18 +104,16 @@ const proTableStyle = c('.npro-table', {
 const columnSettingStyle = c('.npro-table-header__setting', {
   display: 'flex',
   flexDirection: 'column',
-  gap: '8px',
   width: 'min(420px, calc(100vw - 48px))',
   minWidth: '280px',
   maxHeight: '400px',
-  overflowY: 'auto',
 }, [
   c('.npro-table-header__setting-header', {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',
     gap: '16px',
-    padding: '0 6px 8px',
+    padding: '8px 14px',
     borderBottom: '1px solid var(--divider-color)',
   }),
   c('.npro-table-header__setting-list', {
@@ -123,13 +121,16 @@ const columnSettingStyle = c('.npro-table-header__setting', {
     flexDirection: 'column',
     gap: '2px',
   }),
+  c('.npro-table-header__setting-scrollbar', {
+    maxHeight: '340px',
+  }),
   c('.npro-table-header__setting-item', {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',
     gap: '8px',
     minHeight: '36px',
-    padding: '4px 6px',
+    padding: '4px 14px',
     borderRadius: '6px',
     transition: 'background-color .2s',
   }, [

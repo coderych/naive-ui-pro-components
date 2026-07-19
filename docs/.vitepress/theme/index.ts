@@ -18,11 +18,13 @@ import ProSwitchBasic from './demos/ProSwitchBasic.vue'
 import ProTableBasic from './demos/ProTableBasic.vue'
 import ProTableBatch from './demos/ProTableBatch.vue'
 import ProTableColumns from './demos/ProTableColumns.vue'
+import ProTableHeaderSelection from './demos/ProTableHeaderSelection.vue'
 import ProTableMethods from './demos/ProTableMethods.vue'
 import ProTableRemote from './demos/ProTableRemote.vue'
 import ProTableSearch from './demos/ProTableSearch.vue'
 import ProTableSearchFields from './demos/ProTableSearchFields.vue'
 import ProTableSlots from './demos/ProTableSlots.vue'
+import ProTableSpecialColumns from './demos/ProTableSpecialColumns.vue'
 import ProTableToolbar from './demos/ProTableToolbar.vue'
 
 import './custom.css'
@@ -38,7 +40,9 @@ export default {
     app.component('ProTableSearchFields', ProTableSearchFields)
     app.component('ProTableRemote', ProTableRemote)
     app.component('ProTableColumns', ProTableColumns)
+    app.component('ProTableHeaderSelection', ProTableHeaderSelection)
     app.component('ProTableMethods', ProTableMethods)
+    app.component('ProTableSpecialColumns', ProTableSpecialColumns)
     app.component('ProTableToolbar', ProTableToolbar)
     app.component('ProTableSlots', ProTableSlots)
     app.component('ProFormBasic', ProFormBasic)

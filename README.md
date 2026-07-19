@@ -152,6 +152,8 @@ async function request(params) {
 | manualSearch | 是否手动触发搜索 | `boolean` | `false` |
 | checkedRowKeys | 已选中的行键 | `Array<string \| number>` | - |
 | batchActions | 批量操作按钮配置 | `BatchAction[]` | `[]` |
+| showIndex | 是否显示序号列 | `boolean` | `true` |
+| continuousIndex | 序号是否跨页连续 | `boolean` | `true` |
 | pageFields | 分页字段映射 | `{current: string, size: string}` | `{current: 'current', size: 'size'}` |
 
 ### Slots
@@ -159,9 +161,9 @@ async function request(params) {
 | 插槽名 | 说明 |
 | --- | --- |
 | form | 自定义搜索表单 |
-| header | 表格标题区域 |
-| header-extra | 标题右侧额外内容 |
-| title | 自定义标题 |
+| header | 表格标题区域，参数为 `{ keys, rows }` |
+| header-extra | 标题右侧额外内容，参数为 `{ keys, rows }` |
+| title | 自定义标题，参数为 `{ keys, rows }` |
 | batch-actions | 自定义批量操作区域 |
 | default | 自定义表格内容（替代默认 NDataTable） |
 

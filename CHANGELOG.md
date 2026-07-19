@@ -1,5 +1,18 @@
 # 变更日志
 
+## 0.2.1
+
+### 新增
+
+- `ProTable` 新增 `showIndex` 和 `continuousIndex` 属性，支持页内序号与跨页连续序号。
+- 批量选择列和序号列现在可通过列设置调整显示、顺序和固定位置。
+- `ProTable` 的 `header`、`header-extra` 和 `title` 插槽新增选中行 `keys`、`rows` 参数。
+
+### 优化
+
+- `ProTableInst` 中继承的 `DataTableInst` 方法改为必选，通过 `ref` 调用时不再提示方法可能未定义。
+- `ProTable` 列设置的列表区域改用 Naive UI `NScrollbar`，顶部全选与重置操作保持固定。
+
 ## 0.2.0
 
 ### 新增

@@ -5,6 +5,7 @@ export type {
   ProTableBatchActionsSlotProps,
   ProTableColumn,
   ProTableFormSlotProps,
+  ProTableHeaderSlotProps,
   ProTableInst,
   ProTableOption,
   ProTablePagination,
@@ -14,6 +15,7 @@ export type {
   ProTableRequestResult,
   ProTableSearchComponent,
   ProTableSearchOption,
+  ProTableSelectionSlotProps,
   ProTableSlots,
   ProTableSorter,
 } from './src/types'

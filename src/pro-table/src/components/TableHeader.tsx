@@ -3,7 +3,7 @@ import type { SlotsType, VNodeChild } from 'vue'
 import type { ProTableColumnFixed, ProTableColumnKey, ProTableColumnOption } from '../columns-state'
 import type { ProTableOption } from '../types'
 import { Icon } from '@iconify/vue'
-import { NButton, NCheckbox, NDropdown, NEl, NPopover, NTooltip } from 'naive-ui'
+import { NButton, NCheckbox, NDropdown, NEl, NPopover, NScrollbar, NTooltip } from 'naive-ui'
 import { computed, defineComponent, ref, watch } from 'vue'
 import { VueDraggable } from 'vue-draggable-plus'
 import { useProLocale } from '../../../config-provider'
@@ -118,7 +118,7 @@ export default defineComponent({
           )}
 
           {isEnabled('setting') && (
-            <NPopover trigger="click" placement="bottom-end">
+            <NPopover trigger="click" placement="bottom-end" style={{ padding: 0 }}>
               {{ trigger: () => (
                 <NButton class="npro-table-header__action" secondary aria-label={locale('columnSetting')}>
                   {{ icon: () => icon('heroicons-cog-6-tooth', 20) }}
@@ -133,33 +133,35 @@ export default defineComponent({
                       {{ default: () => locale('reset') }}
                     </NButton>
                   </div>
-                  <VueDraggable
-                    modelValue={orderedOptions.value}
-                    {...{ 'onUpdate:modelValue': (val: ProTableColumnOption[]) => { orderedOptions.value = val } }}
-                    class="npro-table-header__setting-list"
-                    handle=".npro-table-header__drag"
-                    animation={150}
-                    onEnd={handleDragEnd}
-                  >
-                    {orderedOptions.value.map(column => (
-                      <div key={column.key} class="npro-table-header__setting-item">
-                        <NCheckbox checked={props.visibleKeys.includes(column.key)} onUpdate:checked={(checked: boolean) => updateColumn(column.key, checked)}>
-                          {{ default: () => column.label }}
-                        </NCheckbox>
-                        <div class="npro-table-header__setting-actions">
-                          <button type="button" title={column.fixed === 'left' ? locale('unpin') : locale('pinLeft')} aria-label={column.fixed === 'left' ? locale('unpin') : locale('pinLeft')} class={['npro-table-header__setting-action', { 'npro-table-header__setting-action--active': column.fixed === 'left' }]} onClick={() => updateFixed(column, 'left')}>
-                            {icon('carbon-open-panel-right')}
-                          </button>
-                          <button type="button" title={column.fixed === 'right' ? locale('unpin') : locale('pinRight')} aria-label={column.fixed === 'right' ? locale('unpin') : locale('pinRight')} class={['npro-table-header__setting-action', { 'npro-table-header__setting-action--active': column.fixed === 'right' }]} onClick={() => updateFixed(column, 'right')}>
-                            {icon('carbon-open-panel-right')}
-                          </button>
-                          <span class="npro-table-header__drag" aria-hidden="true">
-                            {icon('carbon-draggable')}
-                          </span>
+                  <NScrollbar class="npro-table-header__setting-scrollbar">
+                    <VueDraggable
+                      modelValue={orderedOptions.value}
+                      {...{ 'onUpdate:modelValue': (val: ProTableColumnOption[]) => { orderedOptions.value = val } }}
+                      class="npro-table-header__setting-list"
+                      handle=".npro-table-header__drag"
+                      animation={150}
+                      onEnd={handleDragEnd}
+                    >
+                      {orderedOptions.value.map(column => (
+                        <div key={column.key} class="npro-table-header__setting-item">
+                          <NCheckbox checked={props.visibleKeys.includes(column.key)} onUpdate:checked={(checked: boolean) => updateColumn(column.key, checked)}>
+                            {{ default: () => column.label }}
+                          </NCheckbox>
+                          <div class="npro-table-header__setting-actions">
+                            <button type="button" title={column.fixed === 'left' ? locale('unpin') : locale('pinLeft')} aria-label={column.fixed === 'left' ? locale('unpin') : locale('pinLeft')} class={['npro-table-header__setting-action', { 'npro-table-header__setting-action--active': column.fixed === 'left' }]} onClick={() => updateFixed(column, 'left')}>
+                              {icon('carbon-open-panel-right')}
+                            </button>
+                            <button type="button" title={column.fixed === 'right' ? locale('unpin') : locale('pinRight')} aria-label={column.fixed === 'right' ? locale('unpin') : locale('pinRight')} class={['npro-table-header__setting-action', { 'npro-table-header__setting-action--active': column.fixed === 'right' }]} onClick={() => updateFixed(column, 'right')}>
+                              {icon('carbon-open-panel-right')}
+                            </button>
+                            <span class="npro-table-header__drag" aria-hidden="true">
+                              {icon('carbon-draggable')}
+                            </span>
+                          </div>
                         </div>
-                      </div>
-                    ))}
-                  </VueDraggable>
+                      ))}
+                    </VueDraggable>
+                  </NScrollbar>
                 </NEl>
               ) }}
             </NPopover>

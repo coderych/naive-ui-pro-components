@@ -1,7 +1,7 @@
 {
   "name": "@coderych/naive-ui-pro-components",
   "type": "module",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "packageManager": "pnpm@10.33.4",
   "description": "Advanced pro components built on top of Naive UI for Vue 3",
   "author": "",
@@ -53,6 +53,7 @@
     "docs:build": "vitepress build docs",
     "docs:preview": "vitepress preview docs",
     "clean": "rimraf es lib dist",
+    "postinstall": "npx simple-git-hooks",
     "prepublishOnly": "npm run clean && npm run build:lib"
   },
   "peerDependencies": {
@@ -78,11 +79,15 @@
     "jsdom": "^29.1.1",
     "naive-ui": "^2.40.3",
     "rimraf": "^6.0.1",
+    "simple-git-hooks": "^2.13.1",
     "typescript": "^5.7.3",
     "vite": "^6.3.2",
     "vitepress": "^1.6.3",
     "vitest": "^3.1.1",
     "vue": "^3.5.13",
     "vue-tsc": "^2.2.8"
+  },
+  "simple-git-hooks": {
+    "pre-commit": "pnpm lint"
   }
 }

@@ -1,5 +1,7 @@
+import type { ComputedRef, Ref } from 'vue'
 import type { ProTableSetupProps } from './types'
 import { computed, ref, watch } from 'vue'
+import { useProLocale } from '../../config-provider'
 import { getColumnTitle } from '../../shared'
 
 export type ProTableColumnKey = string | number
@@ -11,13 +13,44 @@ export interface ProTableColumnOption {
   label: string
 }
 
-export function useProTableColumns(props: ProTableSetupProps) {
+export interface ProTableColumnsOptions {
+  hasBatchActions: ComputedRef<boolean>
+  indexOffset: Ref<number>
+}
+
+const SELECTION_COLUMN_KEY = '__npro_selection__'
+const INDEX_COLUMN_KEY = '__npro_index__'
+
+export function useProTableColumns(
+  props: ProTableSetupProps,
+  options: ProTableColumnsOptions,
+) {
+  const locale = useProLocale()
   const columnOrder = ref<ProTableColumnKey[]>([])
   const fixedColumns = ref(new Map<ProTableColumnKey, ProTableColumnFixed>())
   const visibleKeys = ref<ProTableColumnKey[]>([])
 
+  const sourceColumns = computed(() => {
+    const columns = props.columns.map((column: any) =>
+      column.type === 'selection'
+        ? normalizeSelectionColumn(column, locale('selectionColumn'))
+        : column,
+    )
+    if (options.hasBatchActions.value && !columns.some((column: any) => column.type === 'selection')) {
+      columns.unshift(createSelectionColumn(locale('selectionColumn')))
+    }
+    if (props.showIndex && !columns.some((column: any) => column.key === INDEX_COLUMN_KEY)) {
+      columns.splice(findIndexColumnPosition(columns), 0, createIndexColumn(
+        locale('indexColumn'),
+        options.indexOffset,
+        props,
+      ))
+    }
+    return columns
+  })
+
   const enabledColumns = computed(() =>
-    props.columns
+    sourceColumns.value
       .filter((col: any) => col.enabled !== false)
       .slice()
       .sort((a: any, b: any) => (a.sort ?? 10) - (b.sort ?? 10)),
@@ -82,7 +115,7 @@ export function useProTableColumns(props: ProTableSetupProps) {
     fixedColumns.value = new Map(fixedColumns.value).set(key, fixed)
   }
 
-  watch(() => props.columns, resetColumns, { deep: true, immediate: true })
+  watch(sourceColumns, resetColumns, { deep: true, immediate: true })
 
   return {
     columnOptions,
@@ -92,6 +125,37 @@ export function useProTableColumns(props: ProTableSetupProps) {
     setColumnOrder,
     setVisibleKeys,
     visibleKeys,
+  }
+}
+
+function createSelectionColumn(label: string) {
+  return normalizeSelectionColumn({ type: 'selection' }, label)
+}
+
+function normalizeSelectionColumn(column: any, label: string) {
+  return {
+    key: SELECTION_COLUMN_KEY,
+    title: label,
+    ...column,
+  }
+}
+
+function findIndexColumnPosition(columns: any[]): number {
+  return columns[0]?.type === 'selection' ? 1 : 0
+}
+
+function createIndexColumn(
+  title: string,
+  indexOffset: Ref<number>,
+  props: ProTableSetupProps,
+) {
+  return {
+    key: INDEX_COLUMN_KEY,
+    title,
+    width: 64,
+    align: 'center' as const,
+    render: (_row: unknown, rowIndex: number) =>
+      rowIndex + 1 + (props.continuousIndex ? indexOffset.value : 0),
   }
 }
 

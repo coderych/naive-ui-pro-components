@@ -57,6 +57,17 @@
   </template>
 </DemoBlock>
 
+## 选择列与序号列
+
+<DemoBlock title="特殊列配置" description="批量操作的选择列和序号列都可在列设置中显示、隐藏、排序或固定；序号可切换是否跨页连续。">
+  <template #default><ProTableSpecialColumns /></template>
+  <template #code>
+
+<<< @/.vitepress/theme/demos/ProTableSpecialColumns.vue
+
+  </template>
+</DemoBlock>
+
 ## 工具栏配置
 
 <DemoBlock title="工具栏配置" description="刷新、全屏、密度和列设置操作。">
@@ -75,6 +86,15 @@
   <template #code>
 
 <<< @/.vitepress/theme/demos/ProTableSlots.vue
+
+  </template>
+</DemoBlock>
+
+<DemoBlock title="在表头操作选中行" description="title、header 和 header-extra 插槽可通过 keys、rows 获取当前选中项，直接执行批量操作。">
+  <template #default><ProTableHeaderSelection /></template>
+  <template #code>
+
+<<< @/.vitepress/theme/demos/ProTableHeaderSelection.vue
 
   </template>
 </DemoBlock>
@@ -103,6 +123,8 @@
 | pagination | `false \| PaginationProps` | `{}` | 分页配置 |
 | batchActions | `ProTableBatchAction[]` | `[]` | 批量操作配置 |
 | checkedRowKeys | `(string\|number)[]` | - | 选中行 keys(v-model) |
+| showIndex | `boolean` | `true` | 是否显示序号列，序号列可在列设置中配置 |
+| continuousIndex | `boolean` | `true` | 序号是否跨页连续 |
 | searchDebounce | `number` | `300` | 搜索防抖(ms) |
 
 继承 Naive UI `NDataTable` 全部 Props。
@@ -132,9 +154,9 @@
 | 插槽名 | 参数 | 说明 |
 |--------|------|------|
 | default | `props` | 自定义表格内容 |
-| title | - | 工具栏标题 |
-| header | - | 自定义整个工具栏 |
-| header-extra | - | 工具栏右侧额外内容 |
+| title | `{ keys, rows }` | 工具栏标题，可获取选中行 |
+| header | `{ keys, rows }` | 自定义整个工具栏，可获取选中行 |
+| header-extra | `{ keys, rows }` | 工具栏右侧额外内容，可获取选中行 |
 | form | `ProTableFormSlotProps` | 自定义搜索字段 |
 | batch-actions | `{ keys, rows }` | 自定义批量操作栏 |
 
