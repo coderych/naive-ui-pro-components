@@ -12,11 +12,13 @@ const proTableStyle = c('.npro-table', {
 }, [
   c('&.npro-table--full', {
     position: 'fixed',
-    inset: 0,
     zIndex: 1000,
-    minHeight: '100vh',
     background: 'color-mix(in srgb, var(--base-color, #fff) 62%, transparent)',
     backdropFilter: 'blur(18px) saturate(140%)',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
   }),
   c('.npro-table__card, .n-card__content, .n-data-table, .n-data-table-wrapper, .n-data-table-base-table, .n-data-table-base-table-body', {
     boxSizing: 'border-box',
