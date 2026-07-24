@@ -70,6 +70,7 @@ const data = [
 | --- | --- |
 | [ProTable](#protable) | 高级表格，支持搜索、分页、批量操作 |
 | [ProForm](#proform) | 高级表单，支持多种字段类型和验证 |
+| [ProSelect](https://coderych.github.io/naive-ui-pro-components/components/pro-select) | 高级选择器，支持远程下拉分页与 ProPopup 表格选择 |
 | [ProPopup](#propopup) | 弹窗组件，支持抽屉和对话框两种模式 |
 | [ProCheckboxGroup](#procheckboxgroup) | 复选框组组件 |
 | [ProRadioGroup](#proradiogroup) | 单选框组组件 |

@@ -59,6 +59,7 @@ export default defineConfig({
           text: '表单',
           items: [
             { text: 'ProForm 高级表单', link: '/components/pro-form' },
+            { text: 'ProSelect 高级选择器', link: '/components/pro-select' },
             { text: 'ProSwitch 开关', link: '/components/pro-switch' },
             { text: 'ProCheckboxGroup 多选框组', link: '/components/pro-checkbox-group' },
             { text: 'ProRadioGroup 单选框组', link: '/components/pro-radio-group' },

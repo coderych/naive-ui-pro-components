@@ -14,6 +14,17 @@ import ProFormValidation from './demos/ProFormValidation.vue'
 import ProPopupBasic from './demos/ProPopupBasic.vue'
 import ProPopupNoChrome from './demos/ProPopupNoChrome.vue'
 import ProRadioGroupBasic from './demos/ProRadioGroupBasic.vue'
+import ProSelectDisabled from './demos/ProSelectDisabled.vue'
+import ProSelectDropdownMultiple from './demos/ProSelectDropdownMultiple.vue'
+import ProSelectDropdownSingle from './demos/ProSelectDropdownSingle.vue'
+import ProSelectExternalValue from './demos/ProSelectExternalValue.vue'
+import ProSelectLocalOptions from './demos/ProSelectLocalOptions.vue'
+import ProSelectMethods from './demos/ProSelectMethods.vue'
+import ProSelectPopupMultiple from './demos/ProSelectPopupMultiple.vue'
+import ProSelectPopupSingle from './demos/ProSelectPopupSingle.vue'
+import ProSelectRequestError from './demos/ProSelectRequestError.vue'
+import ProSelectRequestParams from './demos/ProSelectRequestParams.vue'
+import ProSelectSlots from './demos/ProSelectSlots.vue'
 import ProSwitchBasic from './demos/ProSwitchBasic.vue'
 import ProTableBasic from './demos/ProTableBasic.vue'
 import ProTableBatch from './demos/ProTableBatch.vue'
@@ -57,5 +68,16 @@ export default {
     app.component('ProSwitchBasic', ProSwitchBasic)
     app.component('ProCheckboxGroupBasic', ProCheckboxGroupBasic)
     app.component('ProRadioGroupBasic', ProRadioGroupBasic)
+    app.component('ProSelectDisabled', ProSelectDisabled)
+    app.component('ProSelectDropdownMultiple', ProSelectDropdownMultiple)
+    app.component('ProSelectDropdownSingle', ProSelectDropdownSingle)
+    app.component('ProSelectExternalValue', ProSelectExternalValue)
+    app.component('ProSelectLocalOptions', ProSelectLocalOptions)
+    app.component('ProSelectMethods', ProSelectMethods)
+    app.component('ProSelectPopupMultiple', ProSelectPopupMultiple)
+    app.component('ProSelectPopupSingle', ProSelectPopupSingle)
+    app.component('ProSelectRequestError', ProSelectRequestError)
+    app.component('ProSelectRequestParams', ProSelectRequestParams)
+    app.component('ProSelectSlots', ProSelectSlots)
   },
 } satisfies Theme

@@ -28,6 +28,7 @@ const defaultLocale: ProLocaleMessages = {
   unpin: '取消固定',
   inputPlaceholder: '请输入{label}',
   selectPlaceholder: '请选择{label}',
+  selectText: '选择',
   datePlaceholder: '请选择{label}',
   numberPlaceholder: '请输入{label}',
   empty: '暂无数据',

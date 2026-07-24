@@ -8,6 +8,7 @@ lib
 .env.*
 !.env.example
 .cache
+.codegraph
 *.log
 docs/.vitepress/cache
 docs/.vitepress/dist

@@ -48,6 +48,8 @@ export interface ProLocaleMessages {
   inputPlaceholder: string
   /** Select placeholder template */
   selectPlaceholder: string
+  /** Select action text */
+  selectText: string
   /** Date placeholder template */
   datePlaceholder: string
   /** Number placeholder template */

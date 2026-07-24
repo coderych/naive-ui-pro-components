@@ -87,8 +87,11 @@ export default defineComponent({
     const hasBatchActions = computed(() =>
       (props.batchActions && props.batchActions.length > 0) || !!slots['batch-actions'],
     )
+    const hasSelection = computed(() =>
+      hasBatchActions.value || props.columns.some((column: any) => column.type === 'selection'),
+    )
     const columnsState = useProTableColumns(props, {
-      hasBatchActions,
+      hasSelection,
       indexOffset: requestState.index,
     })
 
@@ -227,7 +230,7 @@ export default defineComponent({
         'onUpdate:pageSize': handleUpdatePageSize as any,
         'onUpdate:sorter': handleUpdateSorter as any,
       }
-      if (hasBatchActions.value) {
+      if (hasSelection.value) {
         dtProps.checkedRowKeys = checkedKeys.value
         dtProps['onUpdate:checkedRowKeys'] = (keys: (string | number)[]) => {
           checkedKeys.value = keys

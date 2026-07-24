@@ -131,6 +131,29 @@ describe('proTable', () => {
     expect(columns.filter(column => column.type === 'selection')).toHaveLength(1)
   })
 
+  it('supports a controlled selection column without batch actions', async () => {
+    const wrapper = mount(ProTable, {
+      props: {
+        checkedRowKeys: [1],
+        columns: [
+          { type: 'selection', multiple: false },
+          { key: 'name', title: '姓名' },
+        ],
+        data: [{ id: 1, name: '张三' }, { id: 2, name: '李四' }],
+        option: false,
+      },
+    })
+
+    const table = wrapper.findComponent(NDataTable)
+    expect(table.props('checkedRowKeys')).toEqual([1])
+
+    table.vm.$emit('update:checkedRowKeys', [2])
+    await nextTick()
+
+    expect(wrapper.emitted('update:checkedRowKeys')?.[0]).toEqual([[2]])
+    expect(wrapper.find('.npro-table__batch-bar').exists()).toBe(false)
+  })
+
   it('includes the generated selection column in column settings', async () => {
     const wrapper = mount(ProTable, {
       props: {

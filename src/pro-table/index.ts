@@ -8,6 +8,7 @@ export type {
   ProTableHeaderSlotProps,
   ProTableInst,
   ProTableOption,
+  ProTablePageFields,
   ProTablePagination,
   ProTableProps,
   ProTableRecord,

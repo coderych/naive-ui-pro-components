@@ -14,7 +14,7 @@ export interface ProTableColumnOption {
 }
 
 export interface ProTableColumnsOptions {
-  hasBatchActions: ComputedRef<boolean>
+  hasSelection: ComputedRef<boolean>
   indexOffset: Ref<number>
 }
 
@@ -36,7 +36,7 @@ export function useProTableColumns(
         ? normalizeSelectionColumn(column, locale('selectionColumn'))
         : column,
     )
-    if (options.hasBatchActions.value && !columns.some((column: any) => column.type === 'selection')) {
+    if (options.hasSelection.value && !columns.some((column: any) => column.type === 'selection')) {
       columns.unshift(createSelectionColumn(locale('selectionColumn')))
     }
     if (props.showIndex && !columns.some((column: any) => column.key === INDEX_COLUMN_KEY)) {

@@ -1,5 +1,20 @@
 # 变更日志
 
+## 0.4.0
+
+### 新增
+
+- 新增 `ProSelect` 高级选择器组件，支持 `dropdown` 和 `popup` 两种选择模式。
+  - `dropdown` 模式：基于 `NSelect`，支持远程搜索、滚动分页、默认值补全。
+  - `popup` 模式：通过 `ProPopup + ProTable` 实现弹窗选择，支持 `modal` 和 `drawer` 两种预设。
+  - 支持单选和多选，统一 `modelValue`、`selectedKeys`、`selectedRows` 数据协议。
+  - 支持 `requestParams`、`searchField`、`pageFields` 等自定义配置。
+  - 提供 `button`、`popup-*`、`table-*` 前缀插槽，避免同名冲突。
+  - 通过 `ref` 暴露 `ProSelectInst`，包含 `selectedKeys`、`selectedRows`、`table`、`popup` 等增强字段。
+- 国际化新增 `selectText` 消息，用于 ProSelect 入口按钮默认文案。
+- 新增 ProSelect 组件文档和演示示例。
+- 新增 ProSelect 单元测试。
+
 ## 0.3.1
 
 ### 修复
